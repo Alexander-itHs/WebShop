@@ -1,0 +1,40 @@
+﻿@page "/add-product"
+@inject Controllers.ProductsController productsController
+@attribute [StreamRendering]
+<h3>AddProduct</h3>
+
+<EditForm Model="product" OnSubmit="HandleSubmit" FormName="addProductForm">
+	
+	<label>Name</label>
+	<InputText @bind-Value=product.Name>@product.Name</InputText>
+	<br />
+
+	<label>Description</label>
+	<InputText @bind-Value=product.Description>@product.Description</InputText>
+	<br />
+
+	<label>Price</label>
+	<InputNumber @bind-Value=product.Price>@product.Price</InputNumber>
+	<br />
+
+	<label>Name</label>
+	<InputNumber @bind-Value=product.Quantity>@product.Quantity</InputNumber>
+	<br />	
+
+	<button type="submit" class="btn btn-primary">Submit</button>
+
+</EditForm>
+
+
+
+
+@code {
+	[SupplyParameterFromForm]
+	private PostProductDTO product { get; set; } = new PostProductDTO();
+
+	private async Task HandleSubmit()
+	{
+		await productsController.PostProduct(product);
+	}
+
+}
