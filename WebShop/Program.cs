@@ -19,8 +19,12 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("ShopDbConnection")));
+
 builder.Services.AddScoped<ImagesController>();
 builder.Services.AddScoped<ProductsController>();
+builder.Services.AddScoped<ProductImagesController>();
 
 builder.Services.AddAuthentication(options =>
 	{

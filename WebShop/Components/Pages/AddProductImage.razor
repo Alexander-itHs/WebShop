@@ -1,0 +1,30 @@
+﻿@page "/add-product-image"
+@inject ProductImagesController productImagesController
+@attribute [StreamRendering]
+
+<h3>Add Product Image</h3>
+
+
+<EditForm Model="productImage" OnSubmit="HandleSubmit" FormName="addProductImageForm">
+	
+	<label>Product Id</label> 
+	<InputNumber @bind-Value=productImage.ProductId>@productImage.ProductId</InputNumber>
+	<br />
+
+	<label>Image Id</label>
+	<InputNumber @bind-Value=productImage.ImageId>@productImage.ImageId</InputNumber>
+	<br />
+
+	<button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+
+@code {
+	[SupplyParameterFromForm]
+	private PostProductImageDTO productImage { get; set; } = new PostProductImageDTO();
+
+	private async Task HandleSubmit()
+	{
+		await productImagesController.PostProductImage(productImage);
+	}	
+}

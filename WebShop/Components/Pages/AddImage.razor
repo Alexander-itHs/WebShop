@@ -1,0 +1,24 @@
+﻿@page "/add-image"
+@inject ImagesController imagesController
+@attribute [StreamRendering]
+
+<h3>AddImage</h3>
+
+<EditForm Model="image" OnSubmit="HandleSubmit" FormName="addImageForm">
+	<label>URL</label>
+	<InputText @bind-Value=image.URL>@image.URL</InputText>
+	<br />
+
+	<button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+
+@code {
+	[SupplyParameterFromForm]
+	private PostImageDTO image { get; set; } = new PostImageDTO();
+
+	private async Task HandleSubmit()
+	{
+		await imagesController.PostImage(image);
+	}
+}

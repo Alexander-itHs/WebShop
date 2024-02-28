@@ -1,5 +1,5 @@
 ﻿@page "/add-product"
-@inject Controllers.ProductsController productsController
+@inject ProductsController productsController
 @attribute [StreamRendering]
 <h3>AddProduct</h3>
 
@@ -17,7 +17,7 @@
 	<InputNumber @bind-Value=product.Price>@product.Price</InputNumber>
 	<br />
 
-	<label>Name</label>
+	<label>Quantity</label>
 	<InputNumber @bind-Value=product.Quantity>@product.Quantity</InputNumber>
 	<br />	
 
@@ -36,5 +36,4 @@
 	{
 		await productsController.PostProduct(product);
 	}
-
 }
