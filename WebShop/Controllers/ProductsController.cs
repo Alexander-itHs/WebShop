@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WebShop.Data;
 using WebShop.DTOs;
 using WebShop.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WebShop.Controllers
 {
@@ -24,5 +25,32 @@ namespace WebShop.Controllers
 			_context.Product.Add(product);
 			await _context.SaveChangesAsync();
 		}
+
+		[HttpGet]
+        public async Task<IEnumerable<GetProductDTO>> GetProducts() 
+        {
+            var products = await _context.Product
+                .Include(product => product.Images)
+                .ToListAsync();
+
+            List<GetProductDTO> productDTOsToReturn = new List<GetProductDTO>();
+
+            foreach (Product product in products) 
+            {
+                GetProductDTO productDTO = new GetProductDTO()
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    Quantity = product.Quantity,
+                    Images = product.Images.ToImageDTOs()
+                };
+				
+                productDTOsToReturn.Add(productDTO);
+            }
+            return productDTOsToReturn;
+        }
+         
     }
 }

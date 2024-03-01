@@ -1,0 +1,21 @@
+﻿@page "/delete-image"
+@inject ImagesController imagesController
+@attribute [StreamRendering]
+
+@* <h3>DeleteImage</h3>
+
+<EditForm Model="image.Id" OnSubmit="HandleSubmit" FormName="deleteImageForm">
+	<label>Image Id</label>
+	<InputNumber @bind-Value=image.Id>@image.Id</InputNumber>
+	<button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+	
+	private Image? image = new Image();
+
+	private async Task HandleSubmit()
+	{
+		await imagesController.DeleteImage(image.Id);
+	}
+} *@

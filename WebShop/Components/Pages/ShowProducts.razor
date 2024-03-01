@@ -1,9 +1,11 @@
-﻿@page "/"
+﻿@page "/show-products"
 @inject ProductsController productsController
 @rendermode InteractiveServer
 @attribute [StreamRendering]
 
-<PageTitle>Home</PageTitle>
+
+<h3>Products</h3>
+
 
 @if (getProducts == null)
 {
@@ -14,34 +16,41 @@ else
 	<table class="table">
 		<thead>
 			<tr>
-				<th scope="col">Article Number</th>
-				<th scope="col">Name</th>				
+				<th scope="col">Product Id</th>
+				<th scope="col">Name</th>
+				<th scope="col">Description</th>
 				<th scope="col">Price</th>
-				<th scope="col"></th>
+				<th scope="col">Quantity</th>
+				<th scope="col">Images</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach (GetProductDTO product in getProducts)
 			{
-				<tr>	
-					<td></td>
-					<td>@product.Name</td>					
+				<tr>
+					<th scope="row">@product.Id</th>
+					<td>@product.Name</td>
+					<td>@product.Description</td>
 					<td>@product.Price</td>
 					<td>@product.Quantity</td>
-
-
+					
+					
 					@if (@product.Images != null && product.Images.Count() > 0)
-					{						
-						<td><img src="@product.Images[0].URL" height="150" /></td>						
-					}
+					{
+						
+						for (int imageNumber = 0; imageNumber < product.Images.Count(); imageNumber++)						
+						{
+							<td><img src="@product.Images[imageNumber].URL" height="150" /></td>
+						}						
+					}					
 				</tr>
 			}
 		</tbody>
 	</table>
 }
 
-@code {
-	public IEnumerable<GetProductDTO>? getProducts;
+@code {	
+	public IEnumerable<GetProductDTO>? getProducts;	
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{

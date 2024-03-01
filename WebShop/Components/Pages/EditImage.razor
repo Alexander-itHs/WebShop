@@ -1,0 +1,31 @@
+﻿@page "/edit-image"
+@inject ImagesController imagesController
+@attribute [StreamRendering]
+
+<h3>EditImageURL</h3>
+
+
+<EditForm Model="image" OnSubmit="HandleSubmit" FormName="editImageForm">
+	<label>Image Id</label>
+	<InputNumber @bind-Value=image.Id>@image.Id</InputNumber>
+	<br />
+
+	<label>Image URL</label>
+	<InputText @bind-Value=image.URL>@image.URL</InputText>
+	<br />
+
+	<button type="submit" class="btn btn-primary">Submit</button>
+
+</EditForm>
+
+
+@code {
+	[SupplyParameterFromForm]
+	private EditImageDTO image { get; set; } = new EditImageDTO();
+
+	private async Task HandleSubmit()
+	{
+		await imagesController.EditImage(image);
+	}
+
+}

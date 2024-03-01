@@ -1,4 +1,5 @@
-﻿using WebShop.DTOs;
+﻿using WebShop.Client.Pages;
+using WebShop.DTOs;
 
 namespace WebShop.Models;
 
@@ -19,6 +20,27 @@ public static class ModelExtensions
 		return new Image
 		{
 			URL = postImageDTO.URL
-		};
+        };
 	}
+
+    public static List<ImageDTO> ToImageDTOs(this IEnumerable<Image> images) 
+    {
+        List<ImageDTO> imageDTOs = new List<ImageDTO>();
+
+        foreach (Image image in images)
+        {
+            ImageDTO imageDTO = new ImageDTO()
+            {
+                Id = image.Id,
+                URL = image.URL
+            };
+            imageDTOs.Add(imageDTO);
+        }
+        return imageDTOs;
+    }
+
+
+
+
+  
 }
