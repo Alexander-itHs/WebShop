@@ -1,0 +1,27 @@
+﻿<h1></h1>
+<div class="col">
+	<div class="card mb-3" style="width: 14rem;">
+
+		@if (GetProduct?.Images != null && GetProduct.Images.Count() > 0)
+		{
+			<img src="@GetProduct.Images[0].URL" class="card-img-top" alt="...">
+		}
+		<div class="card-body">
+			<h5 class="card-title">@GetProduct.Name</h5>
+			<p class="card-text">@GetProduct.Price SEK</p>
+
+			@if (GetProduct.Quantity == 0)
+			{
+				<p class="card-text"><small class="text-body-secondary">Out of stock!</small></p>
+			}
+			else if (GetProduct.Quantity < 4)
+			{
+				<p class="card-text"><small class="text-body-secondary">Only @GetProduct.Quantity left!</small></p>
+			}
+		</div>
+	</div>
+</div>
+@code {
+	[Parameter]
+	public GetProductDTO? GetProduct { get; set; }	
+}  

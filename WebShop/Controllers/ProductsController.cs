@@ -44,13 +44,38 @@ namespace WebShop.Controllers
                     Description = product.Description,
                     Price = product.Price,
                     Quantity = product.Quantity,
-                    Images = product.Images.ToImageDTOs()
+                    Images = product.Images?.ToImageDTOs()
                 };
 				
                 productDTOsToReturn.Add(productDTO);
             }
             return productDTOsToReturn;
         }
-         
+
+        [HttpGet("{id}")]
+        public async Task<GetProductDTO> GetProduct(int id)
+        {
+            Product? product = await _context.Product
+                            .Include(product => product.Images)
+                            .SingleOrDefaultAsync(product => product.Id == id);
+
+            //if (product == null) 
+            //{
+            //    return NotFound();            
+            //}
+
+            GetProductDTO productDTOToReturn = new()
+            { 
+                Id = id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                Images = product.Images?.ToImageDTOs()            
+            };
+            return productDTOToReturn;
+        }
+       
+
     }
 }

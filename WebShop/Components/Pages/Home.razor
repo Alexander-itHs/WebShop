@@ -3,7 +3,12 @@
 @rendermode InteractiveServer
 @attribute [StreamRendering]
 
+
+
 <PageTitle>Home</PageTitle>
+
+<h1>Products:</h1>
+<br />
 
 @if (getProducts == null)
 {
@@ -11,36 +16,18 @@
 }
 else
 {
-	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">Article Number</th>
-				<th scope="col">Name</th>				
-				<th scope="col">Price</th>
-				<th scope="col"></th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (GetProductDTO product in getProducts)
-			{
-				<tr>	
-					<td></td>
-					<td>@product.Name</td>					
-					<td>@product.Price</td>
-					<td>@product.Quantity</td>
-
-
-					@if (@product.Images != null && product.Images.Count() > 0)
-					{						
-						<td><img src="@product.Images[0].URL" height="150" /></td>						
-					}
-				</tr>
-			}
-		</tbody>
-	</table>
+	<div class="container text-center">
+		<div class="row row-cols-3">
+			@foreach (GetProductDTO getProduct in getProducts)		
+			{			
+				<ProductCard GetProduct="getProduct"></ProductCard>				
+			}								
+		</div>
+	</div>	
 }
 
 @code {
+
 	public IEnumerable<GetProductDTO>? getProducts;
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -52,3 +39,26 @@ else
 		}
 	}
 }
+@* <div class="col">
+					<div class="card mb-3" style="width: 14rem;">
+
+						@if (getProduct.Images != null && getProduct.Images.Count() > 0)
+						{
+							<img src="@getProduct.Images[0].URL" class="card-img-top" alt="...">
+						}
+						<div class="card-body">
+							<h5 class="card-title">@getProduct.Name</h5>
+							<p class="card-text">@getProduct.Price SEK</p>
+
+							@if (getProduct.Quantity == 0)
+							{
+								<p class="card-text"><small class="text-body-secondary">Out of stock!</small></p>
+							}
+							else if (getProduct.Quantity < 4)
+							{
+								<p class="card-text"><small class="text-body-secondary">Only @getProduct.Quantity left!</small></p>
+							}
+						</div>
+					</div>
+				</div>	 *@
+
