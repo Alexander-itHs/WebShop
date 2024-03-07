@@ -1,0 +1,45 @@
+﻿
+<div class="card mb-3" style="max-width: 840px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            @if (GetProduct?.Images != null && GetProduct.Images.Count() > 0)
+            {
+                <img src="@GetProduct.Images[0].URL" class="card-img-top" alt="...">
+            }
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">@GetProduct.Name</h5>
+                <p class="card-text">Product ID: @GetProduct.Id</p>
+                <p class="card-text">@GetProduct.Description</p>
+                <p class="card-text">@GetProduct.Price SEK</p>
+                <p class="card-text"><small class="text-body-secondary">In stock: @GetProduct.Quantity</small></p>
+                <div class="atop-stretch-link">
+                    <button class="btn btn-danger btn-lg" @onclick="(() => AddToShoppingCart())">Add to cart</button>
+                </div>
+                <div>
+                    @foreach (var product in ShoppingCart)
+                    {
+                        <p>@product.Name</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public GetProductDTO? GetProduct { get; set; }
+
+    public List<GetProductDTO> ShoppingCart {get; set;} = new List<GetProductDTO>();
+
+    public void AddToShoppingCart()
+    {
+        if (GetProduct != null)
+        {
+            ShoppingCart.Add(GetProduct);
+        }       
+    }
+}
+

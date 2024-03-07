@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using WebShop.Data;
 using WebShop.DTOs;
 using WebShop.Models;
@@ -59,10 +60,10 @@ namespace WebShop.Controllers
                             .Include(product => product.Images)
                             .SingleOrDefaultAsync(product => product.Id == id);
 
-            //if (product == null) 
-            //{
-            //    return NotFound();            
-            //}
+           if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
 
             GetProductDTO productDTOToReturn = new()
             { 

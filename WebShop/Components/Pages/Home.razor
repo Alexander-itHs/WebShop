@@ -1,9 +1,8 @@
 ﻿@page "/"
 @inject ProductsController productsController
+@inject ILocalStorageService localStorage
 @rendermode InteractiveServer
 @attribute [StreamRendering]
-
-
 
 <PageTitle>Home</PageTitle>
 
@@ -14,13 +13,17 @@
 {
 	<p>Loading...</p>
 }
+else if (getProducts.Count() == 0)
+{
+	<p>There are no products in the database.</p>
+}
 else
 {
 	<div class="container text-center">
 		<div class="row row-cols-3">
 			@foreach (GetProductDTO getProduct in getProducts)		
-			{			
-				<ProductCard GetProduct="getProduct"></ProductCard>				
+			{
+				<ProductCards GetProduct="@getProduct"></ProductCards>										
 			}								
 		</div>
 	</div>	
@@ -39,26 +42,5 @@ else
 		}
 	}
 }
-@* <div class="col">
-					<div class="card mb-3" style="width: 14rem;">
 
-						@if (getProduct.Images != null && getProduct.Images.Count() > 0)
-						{
-							<img src="@getProduct.Images[0].URL" class="card-img-top" alt="...">
-						}
-						<div class="card-body">
-							<h5 class="card-title">@getProduct.Name</h5>
-							<p class="card-text">@getProduct.Price SEK</p>
-
-							@if (getProduct.Quantity == 0)
-							{
-								<p class="card-text"><small class="text-body-secondary">Out of stock!</small></p>
-							}
-							else if (getProduct.Quantity < 4)
-							{
-								<p class="card-text"><small class="text-body-secondary">Only @getProduct.Quantity left!</small></p>
-							}
-						</div>
-					</div>
-				</div>	 *@
 
