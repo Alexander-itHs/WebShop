@@ -24,14 +24,14 @@
     [Parameter]
     public GetProductDTO? GetProduct { get; set; }
 
-    // public List<GetProductDTO> ShoppingCart {get; set;} = new List<GetProductDTO>();
+    public List<GetProductDTO> ShoppingCart {get; set;} = new List<GetProductDTO>();
 
-    // public void AddToShoppingCart()
-    // {
-    //     if (GetProduct != null)
-    //     {
-    //         ShoppingCart.Add(GetProduct);
-    //     }       
-    // }
+    public void AddToShoppingCart()
+    {
+        if (GetProduct != null)
+        {
+            ShoppingCart.Add(GetProduct);
+        }       
+    }
 }
 
