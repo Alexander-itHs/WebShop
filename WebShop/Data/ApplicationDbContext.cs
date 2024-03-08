@@ -9,4 +9,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 	public DbSet<Product> Product { get; set; }
 	public DbSet<Image> Image { get; set; }
 
+
+
 }

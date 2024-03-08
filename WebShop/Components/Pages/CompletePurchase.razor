@@ -1,0 +1,81 @@
+﻿@page "/complete-purchase"
+@inject ILocalStorageService localStorage
+@rendermode InteractiveServer
+@attribute [StreamRendering]
+
+<h3>Order Preview</h3>
+
+
+
+<div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Name</th>
+				<th scope="col">Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Products != null)
+			{
+				@foreach (GetProductDTO product in Products)
+				{
+					<tr>
+						<th scope="row">@product.Id</th>
+						<td>@product.Name</td>
+						<td>@product.Price</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>
+
+<div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">First Name</th>
+				<th scope="col">Last Name</th>
+				<th scope="col">Address</th>
+				<th scope="col">Phone number</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (LocalCustomer != null)
+			{
+				<tr>
+					<td>@LocalCustomer.FirstName</td>
+					<td>@LocalCustomer.LastName</td>
+					<td>@LocalCustomer.Address</td>
+					<td>@LocalCustomer.PhoneNumber</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+<a href="order-confirmation">
+	<ClearAllLocalStorage></ClearAllLocalStorage>
+</a>
+
+
+@code {
+	[Parameter]
+	public GetProductDTO? Product { get; set; }
+
+	public List<GetProductDTO> Products { get; set; } = new List<GetProductDTO>();
+
+	[Parameter]
+	public LocalCustomer? LocalCustomer { get; set; }
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			Products = await localStorage.GetItemAsync<List<GetProductDTO>>("GetProductDTO");
+			LocalCustomer = await localStorage.GetItemAsync<LocalCustomer>("LocalCustomer");
+			StateHasChanged();
+		}
+	}
+}

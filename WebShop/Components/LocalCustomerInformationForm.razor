@@ -1,0 +1,40 @@
+﻿@inject ILocalStorageService localStorage
+
+<h3>Customer Details</h3>
+
+<EditForm Model="LocalCustomer" OnSubmit="HandleSubmit" FormName="addCustomerForm">
+
+	<label>First Name</label>
+	<InputText @bind-Value=LocalCustomer.FirstName>@LocalCustomer.FirstName</InputText>
+	<br />
+
+	<label>Last Name</label>
+	<InputText @bind-Value=LocalCustomer.LastName>@LocalCustomer.LastName</InputText>
+	<br />
+
+	<label>Address</label>
+	<InputText @bind-Value=LocalCustomer.Address>@LocalCustomer.Address</InputText>
+	<br />
+
+	<label>Phone number</label>
+	<InputNumber @bind-Value=LocalCustomer.PhoneNumber>@LocalCustomer.PhoneNumber</InputNumber>
+	<br />
+
+	
+	<button type="submit" class="btn btn-primary">Submit</button>
+	
+	<a href="/complete-purchase">
+	<Button Class="btn btn-danger">Proceed with Purchase</Button>
+	</a>
+
+</EditForm>
+
+@code {
+	[SupplyParameterFromForm]
+	public LocalCustomer LocalCustomer { get; set; } = new LocalCustomer();
+
+	public async Task HandleSubmit()
+	{
+		await localStorage.SetItemAsync<LocalCustomer>("LocalCustomer", LocalCustomer);
+	}
+}
