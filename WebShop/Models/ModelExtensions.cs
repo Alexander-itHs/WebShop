@@ -39,8 +39,14 @@ public static class ModelExtensions
         return imageDTOs;
     }
 
-
-
-
-  
+	public static Customer ToCustomer(this CustomerDTO customerDTO) 
+	{
+		return new Customer
+		{
+			FirstName = customerDTO.FirstName,
+			LastName = customerDTO.LastName,
+			Address = customerDTO.Address,
+			PhoneNumber = customerDTO.PhoneNumber
+		};		
+	}  
 }

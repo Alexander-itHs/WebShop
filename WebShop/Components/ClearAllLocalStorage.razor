@@ -1,0 +1,13 @@
+﻿@inject ILocalStorageService localStorage
+
+<div class="atop-stretch-link">
+    <button class="btn btn-danger btn-lg" @onclick="(() => ClearAll())">Clear all</button>
+</div>
+
+@code {
+
+    private async Task ClearAll()
+    {
+        await localStorage.ClearAsync();
+    }
+}

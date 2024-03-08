@@ -1,0 +1,30 @@
+﻿@inject ILocalStorageService localStorage
+@rendermode InteractiveServer
+@attribute [StreamRendering]
+
+
+<div class="atop-stretch-link">
+    <button class="btn btn-danger btn-lg" @onclick="(() => AddToShoppingCart())">Add to cart</button>
+</div>
+
+
+@code {
+    [Parameter]
+    public GetProductDTO? Product { get; set; }
+
+    public List<GetProductDTO>? Products { get; set; } 
+
+
+    public async Task AddToShoppingCart()
+    {   
+        Products = await localStorage.GetItemAsync<List<GetProductDTO>>("GetProductDTO");
+        
+        if (Products == null)
+        {
+            Products = new List<GetProductDTO>();
+        }
+
+        Products.Add(Product);
+        await localStorage.SetItemAsync<List<GetProductDTO>>("GetProductDTO", Products);
+    }
+}

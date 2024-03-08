@@ -1,7 +1,48 @@
 ﻿@page "/shopping-cart"
+@inject ILocalStorageService localStorage
+@rendermode InteractiveServer
+@attribute [StreamRendering]
 
 <h3>ShoppingCart</h3>
 
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Name</th>			
+			<th scope="col">Price</th>			
+		</tr>
+	</thead>
+	<tbody>
+		@if (Products != null)
+		{
+			@foreach (GetProductDTO product in Products)
+			{
+				<tr>
+					<th scope="row">@product.Id</th>
+					<td>@product.Name</td>
+					<td>@product.Price</td>
+				</tr>
+			}		
+		}
+		
+	</tbody>
+</table>
+<br />
+<ClearAllLocalStorage></ClearAllLocalStorage>
+
 @code {
-	
+	[Parameter]
+	public GetProductDTO? Product { get; set; }
+
+	public List<GetProductDTO>? Products { get; set; } = new List<GetProductDTO>();
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			Products = await localStorage.GetItemAsync<List<GetProductDTO>>("GetProductDTO");
+			StateHasChanged();
+		}
+	}	
 }
